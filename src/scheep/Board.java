@@ -42,10 +42,10 @@ public class Board
         // No negative 4th dimension quantum ships allowed
         if (x1 > x2 || y1 > y2)
         {
-            throw new Exception("x1 and y1 must be bigger than x2 and y2");
+            throw new Exception("x1 and y1 must be smaller than x2 and y2");
         }
         
-        // Make sure the ship isnt diagional
+        // Make sure the ship isnt diagonal
         if (!(x1 == x2 | y1 == y2))
         {
             throw new Exception("Ships cannot be diagonally placed");  
