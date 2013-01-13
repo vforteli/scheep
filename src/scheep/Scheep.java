@@ -5,12 +5,15 @@
 package scheep;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author vforteli
+ */
 public class Scheep 
 {
     /**
@@ -97,7 +100,6 @@ public class Scheep
         {
             Highscore score = new Highscore();
             
-            // Read name here...
             System.out.print("Enter name to be placed on highscores list: ");
             score.Name = in.nextLine();
             
@@ -115,12 +117,18 @@ public class Scheep
             }
         } catch (IOException ex)
         {
+            System.out.println("Could not access highscores file");
             Logger.getLogger(Scheep.class.getName()).log(Level.SEVERE, null, ex);
         }
     }           
     
     
  
+    /**
+     * Print the board to system.out
+     * 
+     * @param board
+     */
     public static void PrintBoard(Board.cellstate[][] board)    
     {       
         System.out.print("\t");
@@ -158,7 +166,13 @@ public class Scheep
         }
     }       
     
-    // Converts human coordinates like A14 to x and y coordinates
+ 
+    /**
+     * Converts human coordinates like A14 to zero based x and y coordinates
+     * 
+     * @param humanform
+     * @return 
+     */
     private static Coordinates ConvertCoordinates(String humanform)
     {
         humanform = humanform.toLowerCase();    // Lowercase means not having to check two ascii values...
@@ -177,6 +191,10 @@ public class Scheep
         return c;
     }
     
+    
+    /**
+     * Encapsulate x and y coordinates
+     */
     private static class Coordinates
     {
         public int x;
