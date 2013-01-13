@@ -106,7 +106,7 @@ public class Board
      * Add a random ship to the board with the specified length
      * 
      * @param length
-     * @return
+     * @return True if successful
      * @throws Exception
      */
     public boolean AddRandomShip(int length) throws Exception 
@@ -139,7 +139,7 @@ public class Board
     /**
      * Get the board as a cellstate array of arrays. Coordinates are yx.
      * 
-     * @return 
+     * @return cellstate array of arrays
      */
     public cellstate[][] GetBoard() 
     {
@@ -154,7 +154,7 @@ public class Board
      * 
      * @param x
      * @param y
-     * @return
+     * @return The new cellstate of the cell fire on
      * @throws Exception 
      */
     public cellstate Fire(int x, int y) throws Exception 
@@ -182,7 +182,7 @@ public class Board
      * 
      * @param x
      * @param y
-     * @return 
+     * @return True if valid coordinates
      */
     private boolean isValidCoordinates(int x, int y) 
     {
