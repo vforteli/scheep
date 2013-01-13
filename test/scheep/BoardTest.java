@@ -106,9 +106,9 @@ public class BoardTest
     public void testAddShipOOB() throws Exception
     {
         System.out.println("AddShip");
-        int x1 = 6;
-        int y1 = 6;
-        int x2 = 6;
+        int x1 = 10;
+        int y1 = 10;
+        int x2 = 10;
         int y2 = 10;
         Board instance = new Board(10);
         exception.expect(ArrayIndexOutOfBoundsException.class);
@@ -124,10 +124,10 @@ public class BoardTest
     public void testAddShip() throws Exception
     {
         System.out.println("AddShip");
-        int x1 = 1;
-        int y1 = 1;
-        int x2 = 4;
-        int y2 = 1;
+        int x1 = 9;
+        int y1 = 9;
+        int x2 = 9;
+        int y2 = 9;
         Board instance = new Board(10);
         boolean expResult = true;
         boolean result = instance.AddShip(x1, y1, x2, y2);
@@ -148,7 +148,7 @@ public class BoardTest
         int y2 = 5;
         Board instance = new Board(10);
         boolean expResult = false;
-        instance.AddShip(5, 5,5,5);
+        instance.AddShip(5, 5, 5, 5);
         boolean result = instance.AddShip(x1, y1, x2, y2);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
