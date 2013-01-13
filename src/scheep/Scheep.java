@@ -171,7 +171,7 @@ public class Scheep
      * Converts human coordinates like A14 to zero based x and y coordinates
      * 
      * @param humanform
-     * @return 
+     * @return zero based x and y coordinates
      */
     private static Coordinates ConvertCoordinates(String humanform)
     {
