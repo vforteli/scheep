@@ -36,19 +36,33 @@ public class Highscores
         }
     }
     
-    
+    /**
+     * Get a list of all saved highscores sorted by derp?
+     * 
+     * @return ArrayList of highscores
+     */
     public ArrayList<Highscore> getHighscores()
     {
         return this.highscores;
     }
     
     
-    public void AddHighscore(Highscore highscore) throws IOException
+    /**
+     * Add a new score to the list
+     * 
+     * @param highscore
+     */
+    public void AddHighscore(Highscore highscore)
     {
         this.highscores.add(highscore);
     }            
     
     
+    /**
+     * Save the highscores to a file
+     * 
+     * @throws IOException
+     */
     public void Save() throws IOException
     {
         ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(path));

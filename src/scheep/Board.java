@@ -22,6 +22,11 @@ public class Board
     private cellstate[][] board;
     private int size;
     
+    /**
+     * Returns the number of ship cells unsunk
+     * 
+     * @return Number of shipcells unsunk
+     */
     public int getShipcells() {
         return this.shipcells;
     }
@@ -29,14 +34,34 @@ public class Board
     
     
     
-    
+    /**
+     * Create a new board with specified size
+     * 
+     * @param Size Integer size of one side of the board
+     */
     public Board(int Size) 
     {
         this.size = Size;
         this.board = new cellstate[size][size];
     }
     
-    
+    /**
+     * Add a ship to the board.
+     * 
+     * Add a ship to the board. 
+     * An exception is thrown if the ship would collide with another ship already placed.
+     * Ships cannot be placed next to each other, not even diagonally.
+     * Ships cannot be placed diagonally.
+     * x2 and y2 should be greater than x1 and y1 respectively
+     * 
+     * 
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return True if the ship was successfully placed, False if another ship already occupies the cells
+     * @throws Exception 
+     */
     public boolean AddShip(int x1, int y1, int x2, int y2) throws Exception 
     {
         // No negative 4th dimension quantum ships allowed
@@ -78,7 +103,8 @@ public class Board
       
     
     /**
-     *
+     * Add a random ship to the board with the specified length
+     * 
      * @param length
      * @return
      * @throws Exception
@@ -110,12 +136,27 @@ public class Board
     }
     
     
+    /**
+     * Get the board as a cellstate array of arrays. Coordinates are yx.
+     * 
+     * @return 
+     */
     public cellstate[][] GetBoard() 
     {
         return this.board;        
     }
     
     
+    /**
+     * Fire at the specified coordinates.
+     * 
+     * It is possible to fire at the same coordinates more than once. What does the rules say?
+     * 
+     * @param x
+     * @param y
+     * @return
+     * @throws Exception 
+     */
     public cellstate Fire(int x, int y) throws Exception 
     {
         if (!this.isValidCoordinates(x, y))
@@ -136,6 +177,13 @@ public class Board
     }
     
     
+    /**
+     * Checks if the specified coordinates are valid on the board, ie not out of bounds
+     * 
+     * @param x
+     * @param y
+     * @return 
+     */
     private boolean isValidCoordinates(int x, int y) 
     {
         if ((x > board[0].length | x < 0) | (y > board.length | y < 0))
@@ -146,6 +194,15 @@ public class Board
     }
     
     
+    /**
+     * Checks a ships surrounding cells to make sure no other ship occupies any of these cells
+     * 
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return 
+     */
     private boolean CheckAdjecentCells(int x1, int y1, int x2, int y2) 
     {
         int box1x = x1 - 1;
