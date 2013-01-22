@@ -21,6 +21,7 @@ public class Board
     // Row major, ie yx. Not xy!
     private cellstate[][] board;
     private int size;
+    private boolean isRunning;
     
     /**
      * Returns the number of ship cells unsunk
@@ -64,6 +65,11 @@ public class Board
      */
     public boolean AddShip(int x1, int y1, int x2, int y2) throws Exception 
     {
+        if (this.isRunning)
+        {
+            throw new Exception("Game is already started");
+        }
+        
         // No negative 4th dimension quantum ships allowed
         if (x1 > x2 || y1 > y2)
         {
@@ -159,6 +165,10 @@ public class Board
      */
     public cellstate Fire(int x, int y) throws Exception 
     {
+        if (!this.isRunning)
+        {
+            throw new Exception("Game is not started");
+        }
         if (!this.isValidCoordinates(x, y))
         {
             throw new Exception("Invalid coordinates");
@@ -175,6 +185,7 @@ public class Board
         }
         return board[y][x] = cellstate.Miss;
     }
+    
     
     
     /**
@@ -219,6 +230,22 @@ public class Board
                     return true;
                 }
             }
+        }
+        return false;
+    }
+    
+    
+    /**
+     * Start the game
+     * Returns true if successful. Make sure there are ships placed on the board..
+     * @return 
+     */
+    public boolean StartGame()
+    {
+        if (this.shipcells > 0 && !this.isRunning)
+        {
+            this.isRunning = true;
+            return true;
         }
         return false;
     }
