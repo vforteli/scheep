@@ -45,20 +45,7 @@ public class BoardTest
     {
     }
 
-    /**
-     * Test of getShipcells method, of class Board.
-     */
-    @Test
-    public void testGetShipcells()
-    {
-        System.out.println("getShipcells");
-        Board instance = null;
-        int expResult = 0;
-        int result = instance.getShipcells();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -82,7 +69,7 @@ public class BoardTest
         fail("Ships cannot be placed diagonally");
     }
      /**
-     * Test of AddShip method, of class Board. Diagonal ship
+     * Test of AddShip method, of class Board. Negative ship
      */
     @Test
     public void testAddShipNegative() throws Exception
@@ -99,6 +86,30 @@ public class BoardTest
         // TODO review the generated test code and remove the default call to fail.
         fail("No negative ships allowed");
     }
+    
+    /**
+     * Test of AddShip method, of class Board. Started game
+     */
+    @Test
+    public void testAddShipGameStarted() throws Exception
+    {
+        System.out.println("AddShip");
+        int x1 = 1;
+        int y1 = 1;
+        int x2 = 1;
+        int y2 = 1;
+        Board instance = new Board(10);
+        exception.expect(Exception.class);
+        instance.AddShip(x1, y1, x2, y2);
+        instance.StartGame();
+        
+        boolean result = instance.AddShip(3,3,3,3);
+        //assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("No ships can be added to started game");
+    }
+    
+    
     /**
      * Test of AddShip method, of class Board. Out of bounds ship
      */
@@ -135,6 +146,7 @@ public class BoardTest
         // TODO review the generated test code and remove the default call to fail.
         //fail("Ship could not be placed");
     }
+    
     /**
      * Test of AddShip method, of class Board.
      */
@@ -154,52 +166,50 @@ public class BoardTest
         // TODO review the generated test code and remove the default call to fail.
         //fail("Ship could not be placed");
     }
-
+    
     /**
-     * Test of AddRandomShip method, of class Board.
+     * Test fire game not started
      */
     @Test
-    public void testAddRandomShip() throws Exception
+    public void testFirenotStarted() throws Exception
     {
-        System.out.println("AddRandomShip");
-        int length = 0;
-        Board instance = null;
+        System.out.println("Test fire game not started");
+        exception.expect(Exception.class);
+        Board instance = new Board(10);
+        instance.AddShip(5, 5, 5, 5);
+        instance.Fire(4, 4);
+        
+        // TODO review the generated test code and remove the default call to fail.
+        fail("Cannot fire on game not started");
+    }
+    
+    @Test
+    public void testStartGame()
+    {
+        Board instance = new Board(10);
         boolean expResult = false;
-        boolean result = instance.AddRandomShip(length);
+        boolean result = instance.StartGame();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of GetBoard method, of class Board.
-     */
+    
     @Test
-    public void testGetBoard()
+    public void testStartGameWithShip() throws Exception
     {
-        System.out.println("GetBoard");
-        Board instance = null;
-        cellstate[][] expResult = null;
-        cellstate[][] result = instance.GetBoard();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of Fire method, of class Board.
-     */
-    @Test
-    public void testFire() throws Exception
-    {
-        System.out.println("Fire");
-        int x = 0;
-        int y = 0;
-        Board instance = null;
-        cellstate expResult = null;
-        cellstate result = instance.Fire(x, y);
+        Board instance = new Board(10);
+        boolean expResult = true;
+        instance.AddRandomShip(5);
+        boolean result = instance.StartGame();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
+    
+    @Test
+    public void testStartGameDuplicate()
+    {
+        Board instance = new Board(10);
+        boolean expResult = false;
+        instance.StartGame();
+        boolean result = instance.StartGame();
+        assertEquals(expResult, result);
+    }
+    
 }
