@@ -5,6 +5,7 @@
 package scheep;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -27,10 +28,19 @@ public class Scheep
         while (size < 10 | size > 20)
         {
             System.out.print("Enter size between 10 and 20: ");
-            size = in.nextInt();   
+            try
+            {
+                size = in.nextInt();   
+            }
+            catch (InputMismatchException ex)
+            {
+                // Not a number...
+                System.out.println("Thats not a number, this, is a number!");
+            }
             System.out.println();
+            in.nextLine();  // Get rid of the newline...
         }
-        in.nextLine();  // Get rid of the newline...
+        
         
         Board b = new Board(size);
         
@@ -49,6 +59,8 @@ public class Scheep
         {
             Logger.getLogger(Scheep.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        b.StartGame();
         
         PrintBoard(b.GetBoard());    
         System.out.println("Shipcells left: " + b.getShipcells());
@@ -84,6 +96,7 @@ public class Scheep
             try           
             {
                 System.out.println(b.Fire(x, y));
+                PrintBoard(b.GetBoard());
             } catch (Exception ex)
             {
                 Logger.getLogger(Scheep.class.getName()).log(Level.SEVERE, null, ex);
