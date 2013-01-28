@@ -23,6 +23,11 @@ public class Board
     private int size;
     private boolean isRunning;
     
+    public int getFireCount() {
+        return this.firecount;
+    }
+    private int firecount;
+    
     /**
      * Returns the number of ship cells unsunk
      * 
@@ -173,7 +178,7 @@ public class Board
         {
             throw new Exception("Invalid coordinates");
         }
-        
+        firecount++;
         if (board[y][x] == cellstate.Ship)
         {
             shipcells--;
@@ -183,7 +188,7 @@ public class Board
         {
             return cellstate.Hit;            
         }
-        return board[y][x] = cellstate.Miss;
+        return board[y][x] = cellstate.Miss;       
     }
     
     
@@ -244,6 +249,7 @@ public class Board
     {
         if (this.shipcells > 0 && !this.isRunning)
         {
+            this.firecount = 0;
             this.isRunning = true;
             return true;
         }
