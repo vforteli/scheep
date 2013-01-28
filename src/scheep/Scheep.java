@@ -73,9 +73,9 @@ public class Scheep
         {
             System.out.print("Enter coordinates between a1 and " + (char)(size+96) + "" + size + " to fire: ");
             
-            /*
-            String foo = in.nextLine();
-            Coordinates c = ConvertCoordinates(foo);    // meh, tuples anyone?
+            ///*
+            String input = in.nextLine();
+            Coordinates c = ConvertCoordinates(input);    // meh, tuples anyone?
             try
             {
                 System.out.println(b.Fire(c.x, c.y));
@@ -87,9 +87,9 @@ public class Scheep
             }
             
             PrintBoard(b.GetBoard());
-            */
+            //*/
             
-            ///*
+            /*
             Random r = new Random();
             int x = r.nextInt(size);
             int y = r.nextInt(size);
@@ -101,7 +101,7 @@ public class Scheep
             {
                 Logger.getLogger(Scheep.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //*/
+            */
             //
             System.out.println("Ships left: " + b.getShipcells());
             i++;
@@ -160,7 +160,8 @@ public class Scheep
             {
                if (cell == Board.cellstate.Ship)         
                {
-                   System.out.print(" # ");
+                   //System.out.print(" # ");   // Uncomment to enable "god mode"
+                   System.out.print(" ~ ");
                }
                else if (cell == Board.cellstate.Hit)         
                {
