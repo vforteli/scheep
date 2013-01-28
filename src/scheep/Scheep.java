@@ -66,8 +66,6 @@ public class Scheep
         System.out.println("Shipcells left: " + b.getShipcells());
         
         
-        
-        int i = 0;
         System.out.println("Fire in the hole!");
         while (b.getShipcells() > 0)
         {
@@ -104,9 +102,8 @@ public class Scheep
             */
             //
             System.out.println("Ships left: " + b.getShipcells());
-            i++;
         }
-        System.out.println("All ships sunk in " + i + " turns");
+        System.out.println("All ships sunk in " + b.getFireCount() + " turns");
         
         Highscores h = new Highscores();
         try
@@ -117,7 +114,7 @@ public class Scheep
             score.Name = in.nextLine();
             
             //score.ShipLengths = 10;
-            score.Turns = i;
+            score.Turns = b.getFireCount();
             score.Size = size;
                    
             h.AddHighscore(score);
