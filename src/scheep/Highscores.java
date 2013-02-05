@@ -37,7 +37,7 @@ public class Highscores
     }
     
     /**
-     * Get a list of all saved highscores sorted by derp?
+     * Get a list of all saved highscores sorted by some algorithm to be created
      * 
      * @return ArrayList of highscores
      */
