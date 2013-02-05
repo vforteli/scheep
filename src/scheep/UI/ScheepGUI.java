@@ -2,24 +2,27 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package scheep;
+package scheep.UI;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import scheep.Board;
+import scheep.Highscore;
+import scheep.Highscores;
 
 /**
  *
  * @author vforteli
  */
-public class ScheepUI extends javax.swing.JFrame
+public class ScheepGUI extends javax.swing.JFrame
 {
 
     /**
-     * Creates new form ScheepUI
+     * Creates new form ScheepGUI
      */
-    public ScheepUI()
+    public ScheepGUI()
     {
         initComponents();
     }
@@ -214,7 +217,7 @@ public class ScheepUI extends javax.swing.JFrame
         } 
         catch (Exception ex) 
         {
-            Logger.getLogger(Scheep.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ScheepConsole.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         b.StartGame();
@@ -265,16 +268,16 @@ public class ScheepUI extends javax.swing.JFrame
             }
         } catch (ClassNotFoundException ex)
         {
-            java.util.logging.Logger.getLogger(ScheepUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScheepGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex)
         {
-            java.util.logging.Logger.getLogger(ScheepUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScheepGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex)
         {
-            java.util.logging.Logger.getLogger(ScheepUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScheepGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex)
         {
-            java.util.logging.Logger.getLogger(ScheepUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScheepGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -283,7 +286,7 @@ public class ScheepUI extends javax.swing.JFrame
         {
             public void run()
             {
-                new ScheepUI().setVisible(true);
+                new ScheepGUI().setVisible(true);
             }
         });
     }
@@ -299,6 +302,5 @@ public class ScheepUI extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JOptionPane jOptionPane1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

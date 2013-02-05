@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package scheep;
+package scheep.UI;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -10,12 +10,15 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import scheep.Board;
+import scheep.Highscore;
+import scheep.Highscores;
 
 /**
  *
  * @author vforteli
  */
-public class Scheep 
+public class ScheepConsole 
 {
     /**
      * @param args the command line arguments
@@ -57,7 +60,7 @@ public class Scheep
         } 
         catch (Exception ex) 
         {
-            Logger.getLogger(Scheep.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ScheepConsole.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         b.StartGame();
@@ -97,7 +100,7 @@ public class Scheep
                 PrintBoard(b.GetBoard());
             } catch (Exception ex)
             {
-                Logger.getLogger(Scheep.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ScheepConsole.class.getName()).log(Level.SEVERE, null, ex);
             }
             */
             //
@@ -128,7 +131,7 @@ public class Scheep
         } catch (IOException ex)
         {
             System.out.println("Could not access highscores file");
-            Logger.getLogger(Scheep.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ScheepConsole.class.getName()).log(Level.SEVERE, null, ex);
         }
     }           
     
