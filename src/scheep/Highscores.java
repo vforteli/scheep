@@ -59,6 +59,15 @@ public class Highscores
     
     
     /**
+     * Clears the highscores list. Remember to call save...     * 
+     */
+    public void ClearHighscores()
+    {
+        this.highscores.clear();
+    }
+    
+    
+    /**
      * Save the highscores to a file
      * 
      * @throws IOException

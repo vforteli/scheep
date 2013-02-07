@@ -4,11 +4,13 @@
  */
 package scheep.UI;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import scheep.Board;
+import scheep.Coordinates;
 import scheep.Highscore;
 import scheep.Highscores;
 
@@ -44,10 +46,17 @@ public class ScheepGUI extends javax.swing.JFrame
         HighScoresFrame = new javax.swing.JFrame();
         ResetHighScoresButton = new javax.swing.JButton();
         HighscoresTable = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        BoardPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
+        CoordinatesBox = new javax.swing.JTextField();
+        FireButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         NewGameButton = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        ShowHighscoresButton = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
 
@@ -78,9 +87,17 @@ public class ScheepGUI extends javax.swing.JFrame
         );
 
         HighScoresFrame.setTitle("High scores");
+        HighScoresFrame.setMinimumSize(new java.awt.Dimension(300, 200));
         HighScoresFrame.setName("HighscoresFrame"); // NOI18N
 
         ResetHighScoresButton.setText("Reset");
+        ResetHighScoresButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                ResetHighScoresButtonActionPerformed(evt);
+            }
+        });
 
         HighscoresTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
@@ -134,11 +151,43 @@ public class ScheepGUI extends javax.swing.JFrame
                 .addComponent(ResetHighScoresButton))
         );
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane2.setViewportView(jTextPane1);
+
+        javax.swing.GroupLayout BoardPanelLayout = new javax.swing.GroupLayout(BoardPanel);
+        BoardPanel.setLayout(BoardPanelLayout);
+        BoardPanelLayout.setHorizontalGroup(
+            BoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BoardPanelLayout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
+        );
+        BoardPanelLayout.setVerticalGroup(
+            BoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BoardPanelLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+
+        FireButton.setText("Fire!");
+        FireButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                FireButtonActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
-        NewGameButton.setText("Start");
+        NewGameButton.setText("New game");
         NewGameButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -148,15 +197,15 @@ public class ScheepGUI extends javax.swing.JFrame
         });
         jMenu1.add(NewGameButton);
 
-        jMenuItem1.setText("Highscores");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
+        ShowHighscoresButton.setText("Highscores");
+        ShowHighscoresButton.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jMenuItem1ActionPerformed(evt);
+                ShowHighscoresButtonActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(ShowHighscoresButton);
 
         jMenuBar1.add(jMenu1);
 
@@ -166,11 +215,27 @@ public class ScheepGUI extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FireButton)
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FireButton))
+                .addContainerGap())
         );
 
         pack();
@@ -183,68 +248,138 @@ public class ScheepGUI extends javax.swing.JFrame
 
     
     
-    Board b = null;
-    
-    
+    Board board = null;  
     private void NewGameButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_NewGameButtonActionPerformed
     {//GEN-HEADEREND:event_NewGameButtonActionPerformed
-        if (b != null)
+        // If a game is already running prompt the user for confirmation
+        if (board != null)
         {
-            Object[] options = {"Start new", "Cancel"};
-//            int n = JOptionPane.showOptionDialog(null,
-//                "Would you like some green eggs to go "
-//                + "with that ham?",
-//                "A Silly Question",
-//                JOptionPane.YES_NO_CANCEL_OPTION,
-//                JOptionPane.QUESTION_MESSAGE,
-//                null,
-//                options,
-//                options[2]);
-            // Prompt user if current game should be discarded            
+            int selection = JOptionPane.showConfirmDialog(
+                                null
+                        , "Do you want to discard the current game?"
+                        , "New game"
+                        , JOptionPane.OK_CANCEL_OPTION
+                        , JOptionPane.WARNING_MESSAGE);
+            
+            if (selection != 0)
+            {
+                return;
+            }
         }
         
-        b = new Board(10);
+        // Refactor?
+        board = new Board(10);
         try 
         {
-            b.AddRandomShip(5);
-            b.AddRandomShip(4);
-            b.AddRandomShip(3);
-            b.AddRandomShip(3);
-            b.AddRandomShip(2);
-            //b.AddShip(1, 1, 1, 3);
-            //b.AddShip(1, 5, 1, 7);
-            System.out.println("test");
+            board.AddRandomShip(5);
+            board.AddRandomShip(4);
+            board.AddRandomShip(3);
+            board.AddRandomShip(3);
+            board.AddRandomShip(2);
         } 
         catch (Exception ex) 
         {
             Logger.getLogger(ScheepConsole.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        b.StartGame();
+        board.StartGame();
+        DrawBoard();
+        // Draw board
     }//GEN-LAST:event_NewGameButtonActionPerformed
 
+    
+    private void DrawBoard()
+    {
+        if (board != null)
+        {  
+            Board.cellstate[][] b = board.GetBoard();
+            System.out.print("\t");
+            for (int x = 0; x < b[0].length; x++)
+            {
+                 System.out.print(" " + (char)(x + 97) + " ");
+            }
+            System.out.println();
+            System.out.println();
+
+            int i = 0;
+            for (Board.cellstate[] row : b)
+            {
+                System.out.print(++i + "\t");
+                for (Board.cellstate cell : row)
+                {
+                   if (cell == Board.cellstate.Ship)         
+                   {
+                       //System.out.print(" # ");   // Uncomment to enable "god mode"
+                       System.out.print(" ~ ");
+                   }
+                   else if (cell == Board.cellstate.Hit)         
+                   {
+                       System.out.print(" X ");
+                   }
+                   else if (cell == Board.cellstate.Miss)         
+                   {
+                       System.out.print(" O ");
+                   }
+                   else if (cell == null)
+                   {
+                       System.out.print(" ~ ");
+                   }     
+                }
+                System.out.println();
+            }
+        }
+    }
+    
+    
+    
+    
+    
     Highscores scores = null;
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed
-    {//GEN-HEADEREND:event_jMenuItem1ActionPerformed
+    private void ShowHighscoresButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ShowHighscoresButtonActionPerformed
+    {//GEN-HEADEREND:event_ShowHighscoresButtonActionPerformed
         // Lazy load..
         if (scores == null)
         {
             scores = new Highscores();
         }
-        
-        HighscoresTable.removeAll(); 
-        DefaultTableModel model = new javax.swing.table.DefaultTableModel(); 
-        model.addColumn("Name");
-        model.addColumn("Score");
-        model.addColumn("Difficulty");
-        for (Highscore s : scores.getHighscores())
-        {
-            model.addRow(new Object[] { s.Name, s.Turns, 0}); 
-            System.out.println(s.Name + ": " + s.Turns);                
-        }
-        HighscoresTable.setModel(model);
+        PopulateHighscoresTable();
         HighScoresFrame.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_ShowHighscoresButtonActionPerformed
+
+    private void ResetHighScoresButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ResetHighScoresButtonActionPerformed
+    {//GEN-HEADEREND:event_ResetHighScoresButtonActionPerformed
+        // Well, this button cannot be pressed unless the highscores have been loaded...
+        this.scores.ClearHighscores();
+        try
+        {
+            this.scores.Save();
+        } 
+        catch (IOException ex)
+        {
+            Logger.getLogger(ScheepGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Refresh the list to show the changes
+        PopulateHighscoresTable();        
+    }//GEN-LAST:event_ResetHighScoresButtonActionPerformed
+
+    private void FireButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_FireButtonActionPerformed
+    {//GEN-HEADEREND:event_FireButtonActionPerformed
+        
+        if (CoordinatesBox.getText() != null)
+        {
+            Coordinates c = Coordinates.ParseCoordinates((CoordinatesBox.getText()));
+            try
+            {
+                board.Fire(c.x, c.y);
+                DrawBoard();
+            } 
+            catch (Exception ex)
+            {
+                Logger.getLogger(ScheepGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+    }//GEN-LAST:event_FireButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -291,16 +426,46 @@ public class ScheepGUI extends javax.swing.JFrame
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BoardPanel;
+    private javax.swing.JTextField CoordinatesBox;
+    private javax.swing.JButton FireButton;
     private javax.swing.JFrame HighScoresFrame;
     private javax.swing.JTable HighscoresTable;
     private javax.swing.JMenuItem NewGameButton;
     private javax.swing.JButton ResetHighScoresButton;
+    private javax.swing.JMenuItem ShowHighscoresButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JOptionPane jOptionPane1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
+
+    
+    
+    /**
+     * Populate the high scores frame table with highscores
+     */
+    private void PopulateHighscoresTable()
+    {
+        HighscoresTable.removeAll(); 
+        DefaultTableModel model = new javax.swing.table.DefaultTableModel(); 
+        model.addColumn("Name");
+        model.addColumn("Score");
+        model.addColumn("Difficulty");
+        if (scores != null)
+        {
+            for (Highscore s : scores.getHighscores())
+            {
+                model.addRow(new Object[] { s.Name, s.Turns, 0}); 
+                System.out.println(s.Name + ": " + s.Turns);                
+            }
+        }
+        HighscoresTable.setModel(model);
+    }
 }

@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import scheep.Board;
+import scheep.Coordinates;
 import scheep.Highscore;
 import scheep.Highscores;
 
@@ -76,7 +77,7 @@ public class ScheepConsole
             
             ///*
             String input = in.nextLine();
-            Coordinates c = ConvertCoordinates(input);    // meh, tuples anyone?
+            Coordinates c = Coordinates.ParseCoordinates(input);    // meh, tuples anyone?
             try
             {
                 System.out.println(b.Fire(c.x, c.y));
@@ -181,37 +182,6 @@ public class ScheepConsole
     }       
     
  
-    /**
-     * Converts human coordinates like A14 to zero based x and y coordinates
-     * 
-     * @param humanform
-     * @return zero based x and y coordinates
-     */
-    private static Coordinates ConvertCoordinates(String humanform)
-    {
-        humanform = humanform.toLowerCase();    // Lowercase means not having to check two ascii values...
-        Coordinates c = new Coordinates();
-        
-        try
-        {
-            c.x = ((int)humanform.charAt(0)) - 97;  // ASCII a is 97
-            c.y = Integer.parseInt(humanform.substring(1)) - 1; // Humans are stupid and count coordinates from 1
-        }
-        catch (Exception ex)
-        {
-            // Just return null if parsing fails...
-            c = null;
-        }        
-        return c;
-    }
-    
-    
-    /**
-     * Encapsulate x and y coordinates
-     */
-    private static class Coordinates
-    {
-        public int x;
-        public int y;
-    }                     
+  
+                     
 }
