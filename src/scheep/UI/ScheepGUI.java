@@ -53,6 +53,8 @@ public class ScheepGUI extends javax.swing.JFrame
         jTextPane1 = new javax.swing.JTextPane();
         CoordinatesBox = new javax.swing.JTextField();
         FireButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        TurnsLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         NewGameButton = new javax.swing.JMenuItem();
@@ -185,6 +187,12 @@ public class ScheepGUI extends javax.swing.JFrame
             }
         });
 
+        jLabel1.setText("Turns:");
+
+        TurnsLabel.setMaximumSize(new java.awt.Dimension(31, 14));
+        TurnsLabel.setMinimumSize(new java.awt.Dimension(31, 14));
+        TurnsLabel.setPreferredSize(new java.awt.Dimension(31, 14));
+
         jMenu1.setText("File");
 
         NewGameButton.setText("New game");
@@ -217,14 +225,19 @@ public class ScheepGUI extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(BoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(FireButton)
-                .addGap(14, 14, 14))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TurnsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(FireButton)
+                        .addGap(14, 14, 14))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,9 +245,13 @@ public class ScheepGUI extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(BoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FireButton))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(FireButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(TurnsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -268,6 +285,7 @@ public class ScheepGUI extends javax.swing.JFrame
         }
         
         // Refactor?
+        TurnsLabel.setText("");
         board = new Board(10);
         try 
         {
@@ -373,6 +391,8 @@ public class ScheepGUI extends javax.swing.JFrame
             {
                 board.Fire(c.x, c.y);
                 DrawBoard();
+                
+                TurnsLabel.setText(Integer.toString(board.getFireCount()));
             } 
             catch (Exception ex)
             {
@@ -434,7 +454,9 @@ public class ScheepGUI extends javax.swing.JFrame
     private javax.swing.JMenuItem NewGameButton;
     private javax.swing.JButton ResetHighScoresButton;
     private javax.swing.JMenuItem ShowHighscoresButton;
+    private javax.swing.JLabel TurnsLabel;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
