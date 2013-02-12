@@ -20,7 +20,9 @@ import scheep.Highscores;
  */
 public class ScheepGUI extends javax.swing.JFrame
 {
-
+    Highscores scores = null;
+    
+    
     /**
      * Creates new form ScheepGUI
      */
@@ -39,15 +41,13 @@ public class ScheepGUI extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jMenu3 = new javax.swing.JMenu();
-        jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jOptionPane1 = new javax.swing.JOptionPane();
         HighScoresFrame = new javax.swing.JFrame();
         ResetHighScoresButton = new javax.swing.JButton();
         HighscoresTable = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        NewScoreFrame = new javax.swing.JFrame();
+        SaveScoreNameTextField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        SaveScoreButton = new javax.swing.JButton();
         BoardPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
@@ -55,38 +55,10 @@ public class ScheepGUI extends javax.swing.JFrame
         FireButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         TurnsLabel = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        MainMenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         NewGameButton = new javax.swing.JMenuItem();
         ShowHighscoresButton = new javax.swing.JMenuItem();
-
-        jMenu3.setText("jMenu3");
-
-        jButton2.setText("Start");
-        jButton2.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(610, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(340, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addContainerGap())
-        );
 
         HighScoresFrame.setTitle("High scores");
         HighScoresFrame.setMinimumSize(new java.awt.Dimension(300, 200));
@@ -153,11 +125,54 @@ public class ScheepGUI extends javax.swing.JFrame
                 .addComponent(ResetHighScoresButton))
         );
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        NewScoreFrame.setTitle("Save score");
+        NewScoreFrame.setAlwaysOnTop(true);
+        NewScoreFrame.setMaximumSize(new java.awt.Dimension(390, 120));
+        NewScoreFrame.setMinimumSize(new java.awt.Dimension(390, 120));
+        NewScoreFrame.setPreferredSize(new java.awt.Dimension(390, 120));
+        NewScoreFrame.setResizable(false);
+
+        jLabel2.setText("Enter name to be placed on the highscores list");
+
+        SaveScoreButton.setText("Save");
+        SaveScoreButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                SaveScoreButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout NewScoreFrameLayout = new javax.swing.GroupLayout(NewScoreFrame.getContentPane());
+        NewScoreFrame.getContentPane().setLayout(NewScoreFrameLayout);
+        NewScoreFrameLayout.setHorizontalGroup(
+            NewScoreFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NewScoreFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(NewScoreFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SaveScoreNameTextField)
+                    .addGroup(NewScoreFrameLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 149, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NewScoreFrameLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(SaveScoreButton)))
+                .addContainerGap())
+        );
+        NewScoreFrameLayout.setVerticalGroup(
+            NewScoreFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NewScoreFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SaveScoreNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SaveScoreButton)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Scheep");
 
         jScrollPane2.setViewportView(jTextPane1);
 
@@ -215,9 +230,9 @@ public class ScheepGUI extends javax.swing.JFrame
         });
         jMenu1.add(ShowHighscoresButton);
 
-        jMenuBar1.add(jMenu1);
+        MainMenuBar.add(jMenu1);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(MainMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -258,11 +273,6 @@ public class ScheepGUI extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
-    {//GEN-HEADEREND:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     
     
     Board board = null;  
@@ -302,7 +312,6 @@ public class ScheepGUI extends javax.swing.JFrame
         
         board.StartGame();
         DrawBoard();
-        // Draw board
     }//GEN-LAST:event_NewGameButtonActionPerformed
 
     
@@ -352,18 +361,28 @@ public class ScheepGUI extends javax.swing.JFrame
     
     
     
-    Highscores scores = null;
+
     private void ShowHighscoresButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ShowHighscoresButtonActionPerformed
     {//GEN-HEADEREND:event_ShowHighscoresButtonActionPerformed
+        ShowHighscores();
+    }//GEN-LAST:event_ShowHighscoresButtonActionPerformed
+
+    
+    /*
+     * Show the highscores popup
+     */
+    private void ShowHighscores()
+    {
         // Lazy load..
         if (scores == null)
         {
             scores = new Highscores();
         }
         PopulateHighscoresTable();
-        HighScoresFrame.setVisible(true);
-    }//GEN-LAST:event_ShowHighscoresButtonActionPerformed
-
+        HighScoresFrame.setVisible(true);        
+    }
+    
+    
     private void ResetHighScoresButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ResetHighScoresButtonActionPerformed
     {//GEN-HEADEREND:event_ResetHighScoresButtonActionPerformed
         // Well, this button cannot be pressed unless the highscores have been loaded...
@@ -381,9 +400,10 @@ public class ScheepGUI extends javax.swing.JFrame
         PopulateHighscoresTable();        
     }//GEN-LAST:event_ResetHighScoresButtonActionPerformed
 
+    
     private void FireButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_FireButtonActionPerformed
     {//GEN-HEADEREND:event_FireButtonActionPerformed
-        
+        GameCompleted();    // Debug
         if (CoordinatesBox.getText() != null)
         {
             Coordinates c = Coordinates.ParseCoordinates((CoordinatesBox.getText()));
@@ -393,14 +413,64 @@ public class ScheepGUI extends javax.swing.JFrame
                 DrawBoard();
                 
                 TurnsLabel.setText(Integer.toString(board.getFireCount()));
+                
+                if (board.getShipcells() == 0)
+                {
+                    GameCompleted();
+                }
             } 
             catch (Exception ex)
             {
+                // Notify the user? although, with a clickable GUI this should not be an issue anyway...
                 Logger.getLogger(ScheepGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         } 
     }//GEN-LAST:event_FireButtonActionPerformed
 
+    
+    private void SaveScoreButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_SaveScoreButtonActionPerformed
+    {//GEN-HEADEREND:event_SaveScoreButtonActionPerformed
+        if (scores == null)
+        {
+            scores = new Highscores();
+        }
+        Highscore h = new Highscore();
+        h.Name = SaveScoreNameTextField.getText();
+        h.Score = board.getScore();
+        scores.AddHighscore(h);
+        try
+        {
+            scores.Save();
+        } 
+        catch (IOException ex)
+        {
+            Logger.getLogger(ScheepGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        NewScoreFrame.dispose();
+        SaveScoreNameTextField.setText(null);
+        ShowHighscores();
+    }//GEN-LAST:event_SaveScoreButtonActionPerformed
+
+    
+    /*
+     * Called when a game is completed
+     */
+    private void GameCompleted()
+    {
+        NewScoreFrame.setVisible(true);
+        // Get name for highscore
+        
+        // Save highscore
+        
+        // Show highscores?
+        
+        // Reset state
+    }    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -451,20 +521,18 @@ public class ScheepGUI extends javax.swing.JFrame
     private javax.swing.JButton FireButton;
     private javax.swing.JFrame HighScoresFrame;
     private javax.swing.JTable HighscoresTable;
+    private javax.swing.JMenuBar MainMenuBar;
     private javax.swing.JMenuItem NewGameButton;
+    private javax.swing.JFrame NewScoreFrame;
     private javax.swing.JButton ResetHighScoresButton;
+    private javax.swing.JButton SaveScoreButton;
+    private javax.swing.JTextField SaveScoreNameTextField;
     private javax.swing.JMenuItem ShowHighscoresButton;
     private javax.swing.JLabel TurnsLabel;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JOptionPane jOptionPane1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 
@@ -484,8 +552,8 @@ public class ScheepGUI extends javax.swing.JFrame
         {
             for (Highscore s : scores.getHighscores())
             {
-                model.addRow(new Object[] { s.Name, s.Turns, 0}); 
-                System.out.println(s.Name + ": " + s.Turns);                
+                model.addRow(new Object[] { s.Name, s.Score, 0}); 
+                System.out.println(s.Name + ": " + s.Score);                
             }
         }
         HighscoresTable.setModel(model);

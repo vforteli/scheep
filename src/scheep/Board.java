@@ -31,13 +31,13 @@ public class Board
     /**
      * Returns the number of ship cells unsunk
      * 
-     * @return Number of shipcells unsunk
+     * @return Number of shipcellsleft unsunk
      */
     public int getShipcells() {
-        return this.shipcells;
+        return this.shipcellsleft;
     }
+    private int shipcellsleft = 0;
     private int shipcells = 0;
-    
     
     
     /**
@@ -98,7 +98,7 @@ public class Board
             for (int i = y1; i <= y2; i++)
             {
                 board[i][x1] = cellstate.Ship;
-                shipcells++;
+                shipcellsleft++;
             } 
         }
         else    // Horizontal
@@ -106,7 +106,7 @@ public class Board
             for (int i = x1; i <= x2; i++)
             {
                 board[y1][i] = cellstate.Ship;
-                shipcells++;
+                shipcellsleft++;
             } 
         }        
         return true;
@@ -181,7 +181,7 @@ public class Board
         firecount++;
         if (board[y][x] == cellstate.Ship)
         {
-            shipcells--;
+            shipcellsleft--;
             return board[y][x] = cellstate.Hit;
         }       
         else if (board[y][x] == cellstate.Hit)
@@ -247,13 +247,29 @@ public class Board
      */
     public boolean StartGame()
     {
-        if (this.shipcells > 0 && !this.isRunning)
+        if (this.shipcellsleft > 0 && !this.isRunning)
         {
             this.firecount = 0;
             this.isRunning = true;
+            this.shipcells = this.shipcellsleft;
             return true;
         }
         return false;
+    }
+    
+    
+    /*
+     * Get the score
+     * This method returns 0 if the game is running but there are ships left
+     */
+    public int getScore()
+    {
+        // Dont return a score if there are ships unsunk
+        if (this.isRunning && this.shipcellsleft == 0)
+        {
+            return (this.size / this.firecount) * this.shipcells;         
+        }
+        return 0;
     }
 }
 

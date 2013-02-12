@@ -118,8 +118,7 @@ public class ScheepConsole
             score.Name = in.nextLine();
             
             //score.ShipLengths = 10;
-            score.Turns = b.getFireCount();
-            score.Size = size;
+            score.Score = b.getScore();
                    
             h.AddHighscore(score);
             h.Save();
@@ -127,7 +126,7 @@ public class ScheepConsole
             System.out.println("Highscores: ");
             for (Highscore s : h.getHighscores())
             {
-                System.out.println(s.Name + ": " + s.Turns);                
+                System.out.println(s.Name + ": " + s.Score);                
             }
         } catch (IOException ex)
         {
