@@ -10,7 +10,13 @@ package scheep;
  */
 public class Coordinates
 {
+    /**
+     * X
+     */
     public int x;
+    /**
+     * Y
+     */
     public int y;
     
     

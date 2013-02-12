@@ -12,6 +12,12 @@ import java.io.Serializable;
  */
 public class Highscore implements Serializable
 {
+    /**
+     * Name
+     */
     public String Name;
+    /**
+     * Score
+     */
     public int Score;
 } 

@@ -20,8 +20,19 @@ import scheep.Highscores;
  */
 public class ScheepGUI extends javax.swing.JFrame
 {
-    Highscores scores = null;
-    
+    /*
+     * Lazy loaded scores
+     */
+    private Highscores Scores()
+    {
+        if (this.scores == null)
+        {
+            this.scores = new Highscores();
+        }
+        return this.scores;
+    }           
+    private Highscores scores = null;
+    private Board board = null; 
     
     /**
      * Creates new form ScheepGUI
@@ -274,8 +285,9 @@ public class ScheepGUI extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     
-    
-    Board board = null;  
+    /*
+     * Start a new game
+     */
     private void NewGameButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_NewGameButtonActionPerformed
     {//GEN-HEADEREND:event_NewGameButtonActionPerformed
         // If a game is already running prompt the user for confirmation
@@ -295,7 +307,7 @@ public class ScheepGUI extends javax.swing.JFrame
         }
         
         // Refactor?
-        TurnsLabel.setText("");
+        TurnsLabel.setText("0");
         board = new Board(10);
         try 
         {
@@ -373,12 +385,7 @@ public class ScheepGUI extends javax.swing.JFrame
      */
     private void ShowHighscores()
     {
-        // Lazy load..
-        if (scores == null)
-        {
-            scores = new Highscores();
-        }
-        PopulateHighscoresTable();
+        PopulateHighscoresTable(this.Scores());
         HighScoresFrame.setVisible(true);        
     }
     
@@ -386,10 +393,10 @@ public class ScheepGUI extends javax.swing.JFrame
     private void ResetHighScoresButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ResetHighScoresButtonActionPerformed
     {//GEN-HEADEREND:event_ResetHighScoresButtonActionPerformed
         // Well, this button cannot be pressed unless the highscores have been loaded...
-        this.scores.ClearHighscores();
+        this.Scores().ClearHighscores();
         try
         {
-            this.scores.Save();
+            this.Scores().Save();
         } 
         catch (IOException ex)
         {
@@ -397,13 +404,12 @@ public class ScheepGUI extends javax.swing.JFrame
         }
         
         // Refresh the list to show the changes
-        PopulateHighscoresTable();        
+        PopulateHighscoresTable(this.Scores());        
     }//GEN-LAST:event_ResetHighScoresButtonActionPerformed
 
     
     private void FireButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_FireButtonActionPerformed
     {//GEN-HEADEREND:event_FireButtonActionPerformed
-        GameCompleted();    // Debug
         if (CoordinatesBox.getText() != null)
         {
             Coordinates c = Coordinates.ParseCoordinates((CoordinatesBox.getText()));
@@ -413,7 +419,7 @@ public class ScheepGUI extends javax.swing.JFrame
                 DrawBoard();
                 
                 TurnsLabel.setText(Integer.toString(board.getFireCount()));
-                
+                //GameCompleted();    // Debug
                 if (board.getShipcells() == 0)
                 {
                     GameCompleted();
@@ -430,17 +436,13 @@ public class ScheepGUI extends javax.swing.JFrame
     
     private void SaveScoreButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_SaveScoreButtonActionPerformed
     {//GEN-HEADEREND:event_SaveScoreButtonActionPerformed
-        if (scores == null)
-        {
-            scores = new Highscores();
-        }
         Highscore h = new Highscore();
         h.Name = SaveScoreNameTextField.getText();
         h.Score = board.getScore();
-        scores.AddHighscore(h);
+        this.Scores().AddHighscore(h);
         try
         {
-            scores.Save();
+            this.Scores().Save();
         } 
         catch (IOException ex)
         {
@@ -458,17 +460,21 @@ public class ScheepGUI extends javax.swing.JFrame
     private void GameCompleted()
     {
         NewScoreFrame.setVisible(true);
-        // Get name for highscore
         
-        // Save highscore
-        
-        // Show highscores?
-        
-        // Reset state
+        //ResetGui();
     }    
     
     
-    
+    /*
+     * Reset the gui to initial state
+     */
+    private void ResetGui()
+    {
+        board = null;
+        TurnsLabel.setText(null);
+        CoordinatesBox.setText(null);
+        // Anything else to clear?
+    }
     
     
     /**
@@ -541,18 +547,17 @@ public class ScheepGUI extends javax.swing.JFrame
     /**
      * Populate the high scores frame table with highscores
      */
-    private void PopulateHighscoresTable()
+    private void PopulateHighscoresTable(Highscores _scores)
     {
         HighscoresTable.removeAll(); 
         DefaultTableModel model = new javax.swing.table.DefaultTableModel(); 
         model.addColumn("Name");
         model.addColumn("Score");
-        model.addColumn("Difficulty");
-        if (scores != null)
+        if (_scores != null)
         {
-            for (Highscore s : scores.getHighscores())
+            for (Highscore s : _scores.getHighscores())
             {
-                model.addRow(new Object[] { s.Name, s.Score, 0}); 
+                model.addRow(new Object[] { s.Name, s.Score}); 
                 System.out.println(s.Name + ": " + s.Score);                
             }
         }

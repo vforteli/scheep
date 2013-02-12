@@ -10,11 +10,27 @@ package scheep;
  */
 import java.util.Random; 
 
+/**
+ *
+ * @author vforteli
+ */
 public class Board 
 {    
+    /**
+     * Represents the states a cell on the board can be in. Note that null is also a valid state...
+     */
     public enum cellstate {
+        /**
+         *
+         */
         Ship,
+        /**
+         *
+         */
         Hit,
+        /**
+         *
+         */
         Miss        
     }
     
@@ -23,6 +39,11 @@ public class Board
     private int size;
     private boolean isRunning;
     
+    
+    /**
+     *  Fire count, aka number of turns
+     * @return number of turns used
+     */
     public int getFireCount() {
         return this.firecount;
     }
@@ -261,6 +282,10 @@ public class Board
     /*
      * Get the score
      * This method returns 0 if the game is running but there are ships left
+     */
+    /**
+     *
+     * @return
      */
     public int getScore()
     {

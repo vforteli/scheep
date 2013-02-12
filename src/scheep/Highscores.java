@@ -23,6 +23,9 @@ public class Highscores
     private final String path = "C:\\highscores.txt";
     private ArrayList<Highscore> highscores = new ArrayList<Highscore>();
     
+    /**
+     * Create a high scores list object and load the high scores from file
+     */
     public Highscores()
     {
         try
