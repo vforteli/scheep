@@ -4,10 +4,18 @@
  */
 package scheep.UI;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import scheep.Board;
 import scheep.Coordinates;
@@ -60,8 +68,6 @@ public class ScheepGUI extends javax.swing.JFrame
         jLabel2 = new javax.swing.JLabel();
         SaveScoreButton = new javax.swing.JButton();
         BoardPanel = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
         CoordinatesBox = new javax.swing.JTextField();
         FireButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -138,9 +144,7 @@ public class ScheepGUI extends javax.swing.JFrame
 
         NewScoreFrame.setTitle("Save score");
         NewScoreFrame.setAlwaysOnTop(true);
-        NewScoreFrame.setMaximumSize(new java.awt.Dimension(390, 120));
         NewScoreFrame.setMinimumSize(new java.awt.Dimension(390, 120));
-        NewScoreFrame.setPreferredSize(new java.awt.Dimension(390, 120));
         NewScoreFrame.setResizable(false);
 
         jLabel2.setText("Enter name to be placed on the highscores list");
@@ -185,23 +189,15 @@ public class ScheepGUI extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Scheep");
 
-        jScrollPane2.setViewportView(jTextPane1);
-
         javax.swing.GroupLayout BoardPanelLayout = new javax.swing.GroupLayout(BoardPanel);
         BoardPanel.setLayout(BoardPanelLayout);
         BoardPanelLayout.setHorizontalGroup(
             BoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BoardPanelLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+            .addGap(0, 488, Short.MAX_VALUE)
         );
         BoardPanelLayout.setVerticalGroup(
             BoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BoardPanelLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+            .addGap(0, 388, Short.MAX_VALUE)
         );
 
         FireButton.setText("Fire!");
@@ -291,7 +287,7 @@ public class ScheepGUI extends javax.swing.JFrame
     private void NewGameButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_NewGameButtonActionPerformed
     {//GEN-HEADEREND:event_NewGameButtonActionPerformed
         // If a game is already running prompt the user for confirmation
-        if (board != null)
+        if (board != null && board.getIsRunning())
         {
             int selection = JOptionPane.showConfirmDialog(
                                 null
@@ -323,56 +319,76 @@ public class ScheepGUI extends javax.swing.JFrame
         }
         
         board.StartGame();
-        DrawBoard();
+        
+        DrawBoard(board.GetBoard());
     }//GEN-LAST:event_NewGameButtonActionPerformed
 
     
-    private void DrawBoard()
-    {
-        if (board != null)
-        {  
-            Board.cellstate[][] b = board.GetBoard();
-            System.out.print("\t");
-            for (int x = 0; x < b[0].length; x++)
-            {
-                 System.out.print(" " + (char)(x + 97) + " ");
-            }
-            System.out.println();
-            System.out.println();
+    
+    private void DrawBoard(Board.cellstate[][] cells)
+    { 
+        BoardPanel.removeAll();
+        BoardPanel.setLayout(new GridLayout(cells.length, cells.length));
+        BoardPanel.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-            int i = 0;
-            for (Board.cellstate[] row : b)
+        int x = 0; 
+        int y = 0;
+        for (Board.cellstate[] row : cells)
+        {
+            for (Board.cellstate cell : row)
             {
-                System.out.print(++i + "\t");
-                for (Board.cellstate cell : row)
+                JPanel cellpanel = new JPanel();
+                cellpanel.setEnabled(true);
+                cellpanel.setName(new Coordinates(x, y).getHumanCoordinates());
+                cellpanel.setPreferredSize(new Dimension(3, 3));
+                cellpanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            
+                cellpanel.addMouseListener(new MouseAdapter() 
                 {
-                   if (cell == Board.cellstate.Ship)         
-                   {
-                       //System.out.print(" # ");   // Uncomment to enable "god mode"
-                       System.out.print(" ~ ");
-                   }
-                   else if (cell == Board.cellstate.Hit)         
-                   {
-                       System.out.print(" X ");
-                   }
-                   else if (cell == Board.cellstate.Miss)         
-                   {
-                       System.out.print(" O ");
-                   }
-                   else if (cell == null)
-                   {
-                       System.out.print(" ~ ");
-                   }     
+                    @Override
+                    public void mousePressed(MouseEvent e) 
+                    {  
+                        JPanel cell =(JPanel)e.getSource();
+                        Coordinates c = Coordinates.ParseCoordinates(cell.getName());
+
+                        try
+                        {
+                            Fire(c);
+                        } 
+                        catch (Exception ex)
+                        {
+                            Logger.getLogger(ScheepGUI.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+                
+                if (cell == Board.cellstate.Ship)         
+                {
+                    cellpanel.setBackground(Color.blue);
                 }
-                System.out.println();
+                else if (cell == Board.cellstate.Hit)         
+                {
+                    cellpanel.setBackground(Color.red);
+                }
+                else if (cell == Board.cellstate.Miss)         
+                {
+                    cellpanel.setBackground(Color.gray);
+                }
+                else if (cell == null)
+                {
+                    cellpanel.setBackground(Color.blue);
+                }  
+                
+                BoardPanel.add(cellpanel);
+                x++;
             }
+            x = 0;
+            y++;
         }
     }
     
     
-    
-    
-    
+       
 
     private void ShowHighscoresButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ShowHighscoresButtonActionPerformed
     {//GEN-HEADEREND:event_ShowHighscoresButtonActionPerformed
@@ -413,11 +429,21 @@ public class ScheepGUI extends javax.swing.JFrame
         if (CoordinatesBox.getText() != null)
         {
             Coordinates c = Coordinates.ParseCoordinates((CoordinatesBox.getText()));
+            Fire(c);
+        } 
+    }//GEN-LAST:event_FireButtonActionPerformed
+
+    
+    private void Fire(Coordinates c)
+    {
+        if (board != null && board.getIsRunning())
+        {
             try
             {
                 board.Fire(c.x, c.y);
-                DrawBoard();
-                
+               
+                DrawBoard(board.GetBoard());
+
                 TurnsLabel.setText(Integer.toString(board.getFireCount()));
                 //GameCompleted();    // Debug
                 if (board.getShipcells() == 0)
@@ -430,9 +456,10 @@ public class ScheepGUI extends javax.swing.JFrame
                 // Notify the user? although, with a clickable GUI this should not be an issue anyway...
                 Logger.getLogger(ScheepGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } 
-    }//GEN-LAST:event_FireButtonActionPerformed
-
+        }
+    }
+    
+    
     
     private void SaveScoreButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_SaveScoreButtonActionPerformed
     {//GEN-HEADEREND:event_SaveScoreButtonActionPerformed
@@ -538,8 +565,6 @@ public class ScheepGUI extends javax.swing.JFrame
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 
     

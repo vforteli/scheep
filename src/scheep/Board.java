@@ -38,6 +38,10 @@ public class Board
     private cellstate[][] board;
     private int size;
     private boolean isRunning;
+    public boolean getIsRunning()
+    {
+        return this.isRunning;
+    }
     
     
     /**
@@ -203,6 +207,12 @@ public class Board
         if (board[y][x] == cellstate.Ship)
         {
             shipcellsleft--;
+            
+            if (shipcellsleft == 0)
+            {
+                this.isRunning = false;
+            }
+            
             return board[y][x] = cellstate.Hit;
         }       
         else if (board[y][x] == cellstate.Hit)

@@ -82,4 +82,20 @@ public class CoordinatesTest
 
         assertNull(c);
     }
+      
+      
+      
+    @Test
+    public void testHumanCoordinates() throws Exception
+    {
+        Coordinates c = new Coordinates(0, 0);   
+        assertEquals("a1", c.getHumanCoordinates());
+    }
+    
+    @Test
+    public void testHumanCoordinatesMax() throws Exception
+    {
+        Coordinates c = new Coordinates(25, 99);   
+        assertEquals("z100", c.getHumanCoordinates());
+    }
 }

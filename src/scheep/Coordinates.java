@@ -20,6 +20,24 @@ public class Coordinates
     public int y;
     
     
+    public String getHumanCoordinates()
+    {
+        return (char)(this.x + 97) + Integer.toString(this.y + 1);
+    }
+    
+    
+    public Coordinates(int x, int y)
+    {
+        this.x = x;
+        this.y = y;        
+    }
+    
+    public Coordinates()
+    {
+        
+        
+    }
+    
       /**
      * Converts human coordinates like A14 to zero based x and y coordinates
      * 
