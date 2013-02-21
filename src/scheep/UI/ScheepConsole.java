@@ -99,7 +99,8 @@ public class ScheepConsole
             {
                 System.out.println(b.Fire(x, y));
                 PrintBoard(b.GetBoard());
-            } catch (Exception ex)
+            } 
+            catch (Exception ex)
             {
                 Logger.getLogger(ScheepConsole.class.getName()).log(Level.SEVERE, null, ex);
             }
