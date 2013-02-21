@@ -77,6 +77,8 @@ public class ScheepGUI extends javax.swing.JFrame
         FireButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         TurnsLabel = new javax.swing.JLabel();
+        jlabel2 = new javax.swing.JLabel();
+        ScoreLabel = new javax.swing.JLabel();
         MainMenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         NewGameButton = new javax.swing.JMenuItem();
@@ -280,6 +282,12 @@ public class ScheepGUI extends javax.swing.JFrame
         TurnsLabel.setMinimumSize(new java.awt.Dimension(31, 14));
         TurnsLabel.setPreferredSize(new java.awt.Dimension(31, 14));
 
+        jlabel2.setText("Score");
+
+        ScoreLabel.setMaximumSize(new java.awt.Dimension(34, 14));
+        ScoreLabel.setMinimumSize(new java.awt.Dimension(34, 14));
+        ScoreLabel.setPreferredSize(new java.awt.Dimension(34, 14));
+
         jMenu1.setText("File");
 
         NewGameButton.setText("New game");
@@ -320,6 +328,10 @@ public class ScheepGUI extends javax.swing.JFrame
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TurnsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jlabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -333,12 +345,16 @@ public class ScheepGUI extends javax.swing.JFrame
                 .addComponent(BoardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(FireButton))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CoordinatesBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FireButton))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(TurnsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(TurnsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jlabel2)
+                        .addComponent(ScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -509,6 +525,8 @@ public class ScheepGUI extends javax.swing.JFrame
                 DrawBoard(board.GetBoard());
 
                 TurnsLabel.setText(Integer.toString(board.getFireCount()));
+                ScoreLabel.setText(Integer.toString(board.getScore()));
+                
                 if (board.getShipcells() == 0)
                 {
                     GameCompleted();
@@ -605,6 +623,7 @@ public class ScheepGUI extends javax.swing.JFrame
     {
         board = null;
         TurnsLabel.setText(null);
+        ScoreLabel.setText(null);
         CoordinatesBox.setText(null);
         // Anything else to clear?
     }
@@ -668,6 +687,7 @@ public class ScheepGUI extends javax.swing.JFrame
     private javax.swing.JButton ResetHighScoresButton;
     private javax.swing.JButton SaveScoreButton;
     private javax.swing.JTextField SaveScoreNameTextField;
+    private javax.swing.JLabel ScoreLabel;
     private java.awt.Choice ShipsCountChoice;
     private javax.swing.JMenuItem ShowHighscoresButton;
     private java.awt.Button StartGameButton;
@@ -675,6 +695,7 @@ public class ScheepGUI extends javax.swing.JFrame
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JLabel jlabel2;
     private java.awt.Label label1;
     private java.awt.Label label2;
     // End of variables declaration//GEN-END:variables
