@@ -4,13 +4,13 @@
  */
 package scheep;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Level;
@@ -33,13 +33,16 @@ public class Highscores
     {
         try
         {
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream(path));
-            this.highscores = (ArrayList<Highscore>)input.readObject();
+            File test = new File(path);
+            if (test.isFile() && test.canWrite())
+            {
+                ObjectInputStream input = new ObjectInputStream(new FileInputStream(path));
+                this.highscores = (ArrayList<Highscore>)input.readObject();
+            }
         } 
         catch (Exception ex)
         {
             Logger.getLogger(Highscores.class.getName()).log(Level.INFO, null, ex);
-            this.highscores = new ArrayList<Highscore>();
         }
     }
     
