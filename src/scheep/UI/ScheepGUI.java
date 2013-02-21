@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,6 +66,12 @@ public class ScheepGUI extends javax.swing.JFrame
         SaveScoreNameTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         SaveScoreButton = new javax.swing.JButton();
+        NewGameFrame = new javax.swing.JFrame();
+        BoardSizeChoice = new java.awt.Choice();
+        label1 = new java.awt.Label();
+        label2 = new java.awt.Label();
+        ShipsCountChoice = new java.awt.Choice();
+        StartGameButton = new java.awt.Button();
         BoardPanel = new javax.swing.JPanel();
         CoordinatesBox = new javax.swing.JTextField();
         FireButton = new javax.swing.JButton();
@@ -144,7 +149,9 @@ public class ScheepGUI extends javax.swing.JFrame
 
         NewScoreFrame.setTitle("Save score");
         NewScoreFrame.setAlwaysOnTop(true);
+        NewScoreFrame.setMaximumSize(new java.awt.Dimension(390, 120));
         NewScoreFrame.setMinimumSize(new java.awt.Dimension(390, 120));
+        NewScoreFrame.setPreferredSize(new java.awt.Dimension(390, 120));
         NewScoreFrame.setResizable(false);
 
         jLabel2.setText("Enter name to be placed on the highscores list");
@@ -183,8 +190,66 @@ public class ScheepGUI extends javax.swing.JFrame
                 .addComponent(SaveScoreNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SaveScoreButton)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
+
+        NewGameFrame.setTitle("Start game");
+        NewGameFrame.setAlwaysOnTop(true);
+        NewGameFrame.setMaximumSize(new java.awt.Dimension(250, 144));
+        NewGameFrame.setMinimumSize(new java.awt.Dimension(250, 144));
+        NewGameFrame.setPreferredSize(new java.awt.Dimension(250, 144));
+        NewGameFrame.setResizable(false);
+
+        label1.setAlignment(java.awt.Label.RIGHT);
+        label1.setText("Size");
+
+        label2.setAlignment(java.awt.Label.RIGHT);
+        label2.setText("Ships");
+
+        StartGameButton.setActionCommand("StartGameButton");
+        StartGameButton.setLabel("Start");
+        StartGameButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                StartGameButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout NewGameFrameLayout = new javax.swing.GroupLayout(NewGameFrame.getContentPane());
+        NewGameFrame.getContentPane().setLayout(NewGameFrameLayout);
+        NewGameFrameLayout.setHorizontalGroup(
+            NewGameFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NewGameFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(NewGameFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(label2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(NewGameFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(StartGameButton, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                    .addGroup(NewGameFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(BoardSizeChoice, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                        .addComponent(ShipsCountChoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+        NewGameFrameLayout.setVerticalGroup(
+            NewGameFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NewGameFrameLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(NewGameFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BoardSizeChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(NewGameFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ShipsCountChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(StartGameButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+
+        StartGameButton.getAccessibleContext().setAccessibleName("Start");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Scheep");
@@ -281,7 +346,7 @@ public class ScheepGUI extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     
-    /*
+    /**
      * Start a new game
      */
     private void NewGameButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_NewGameButtonActionPerformed
@@ -299,32 +364,27 @@ public class ScheepGUI extends javax.swing.JFrame
             if (selection != 0)
             {
                 return;
-            }
+            }    
         }
+             
+        BoardSizeChoice.removeAll();
+        BoardSizeChoice.add("10");
+        BoardSizeChoice.add("15");
+        BoardSizeChoice.add("20");
         
-        // Refactor?
-        TurnsLabel.setText("0");
-        board = new Board(10);
-        try 
-        {
-            board.AddRandomShip(5);
-            board.AddRandomShip(4);
-            board.AddRandomShip(3);
-            board.AddRandomShip(3);
-            board.AddRandomShip(2);
-        } 
-        catch (Exception ex) 
-        {
-            Logger.getLogger(ScheepConsole.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ShipsCountChoice.removeAll();
+        ShipsCountChoice.add("5");
+        ShipsCountChoice.add("7");
+        ShipsCountChoice.add("9");
         
-        board.StartGame();
-        
-        DrawBoard(board.GetBoard());
+        NewGameFrame.setVisible(true);
     }//GEN-LAST:event_NewGameButtonActionPerformed
 
     
-    
+    /**
+     * Draw the board to screen
+     * @param cells 
+     */
     private void DrawBoard(Board.cellstate[][] cells)
     { 
         BoardPanel.removeAll();
@@ -396,7 +456,8 @@ public class ScheepGUI extends javax.swing.JFrame
     }//GEN-LAST:event_ShowHighscoresButtonActionPerformed
 
     
-    /*
+    
+    /**
      * Show the highscores popup
      */
     private void ShowHighscores()
@@ -404,6 +465,7 @@ public class ScheepGUI extends javax.swing.JFrame
         PopulateHighscoresTable(this.Scores());
         HighScoresFrame.setVisible(true);        
     }
+    
     
     
     private void ResetHighScoresButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ResetHighScoresButtonActionPerformed
@@ -424,6 +486,7 @@ public class ScheepGUI extends javax.swing.JFrame
     }//GEN-LAST:event_ResetHighScoresButtonActionPerformed
 
     
+    
     private void FireButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_FireButtonActionPerformed
     {//GEN-HEADEREND:event_FireButtonActionPerformed
         if (CoordinatesBox.getText() != null)
@@ -433,6 +496,7 @@ public class ScheepGUI extends javax.swing.JFrame
         } 
     }//GEN-LAST:event_FireButtonActionPerformed
 
+    
     
     private void Fire(Coordinates c)
     {
@@ -445,11 +509,11 @@ public class ScheepGUI extends javax.swing.JFrame
                 DrawBoard(board.GetBoard());
 
                 TurnsLabel.setText(Integer.toString(board.getFireCount()));
-                //GameCompleted();    // Debug
                 if (board.getShipcells() == 0)
                 {
                     GameCompleted();
                 }
+                System.out.println(board.getScore());
             } 
             catch (Exception ex)
             {
@@ -481,7 +545,49 @@ public class ScheepGUI extends javax.swing.JFrame
     }//GEN-LAST:event_SaveScoreButtonActionPerformed
 
     
-    /*
+    /**
+     * Handle start game clicks
+     * @param evt 
+     */
+    private void StartGameButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_StartGameButtonActionPerformed
+    {//GEN-HEADEREND:event_StartGameButtonActionPerformed
+        NewGameFrame.dispose();
+        
+        TurnsLabel.setText("0");
+        board = new Board(Integer.parseInt(BoardSizeChoice.getSelectedItem()));
+        
+        try 
+        {
+            board.AddRandomShip(5);
+            board.AddRandomShip(4);
+            board.AddRandomShip(3);
+            board.AddRandomShip(3);
+            board.AddRandomShip(2);
+            
+            int ships = Integer.parseInt(ShipsCountChoice.getSelectedItem());
+            if (ships == 7 || ships == 9)
+            {
+                board.AddRandomShip(2);
+                board.AddRandomShip(3);
+            }
+            if (ships == 9)
+            {
+                board.AddRandomShip(5);
+                board.AddRandomShip(1); // :p         
+            }
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(ScheepConsole.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        board.StartGame();
+        
+        DrawBoard(board.GetBoard());
+    }//GEN-LAST:event_StartGameButtonActionPerformed
+
+    
+    /**
      * Called when a game is completed
      */
     private void GameCompleted()
@@ -550,21 +656,27 @@ public class ScheepGUI extends javax.swing.JFrame
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BoardPanel;
+    private java.awt.Choice BoardSizeChoice;
     private javax.swing.JTextField CoordinatesBox;
     private javax.swing.JButton FireButton;
     private javax.swing.JFrame HighScoresFrame;
     private javax.swing.JTable HighscoresTable;
     private javax.swing.JMenuBar MainMenuBar;
     private javax.swing.JMenuItem NewGameButton;
+    private javax.swing.JFrame NewGameFrame;
     private javax.swing.JFrame NewScoreFrame;
     private javax.swing.JButton ResetHighScoresButton;
     private javax.swing.JButton SaveScoreButton;
     private javax.swing.JTextField SaveScoreNameTextField;
+    private java.awt.Choice ShipsCountChoice;
     private javax.swing.JMenuItem ShowHighscoresButton;
+    private java.awt.Button StartGameButton;
     private javax.swing.JLabel TurnsLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private java.awt.Label label1;
+    private java.awt.Label label2;
     // End of variables declaration//GEN-END:variables
 
     

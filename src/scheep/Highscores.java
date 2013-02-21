@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class Highscores 
 {
-    private final String path = "C:\\highscores.txt";
+    private final String path = System.getProperty("user.dir") + "\\highscores.txt";
     private ArrayList<Highscore> highscores = new ArrayList<Highscore>();
     
     /**
@@ -32,9 +35,10 @@ public class Highscores
         {
             ObjectInputStream input = new ObjectInputStream(new FileInputStream(path));
             this.highscores = (ArrayList<Highscore>)input.readObject();
-        } catch (Exception ex)
+        } 
+        catch (Exception ex)
         {
-            Logger.getLogger(Highscores.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Highscores.class.getName()).log(Level.INFO, null, ex);
             this.highscores = new ArrayList<Highscore>();
         }
     }
@@ -78,7 +82,18 @@ public class Highscores
     public void Save() throws IOException
     {
         ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(path));
+        
+        Collections.sort(this.highscores,new Comparator<Highscore>() { 
+            @Override
+            public int compare(Highscore o1, Highscore o2)
+            {
+                return o1.Score - o2.Score;
+            }
+        });
+        
+        Collections.reverse(this.highscores);
+        
         output.writeObject(this.highscores);
         output.close();
-    }
+    }    
 }

@@ -299,12 +299,7 @@ public class Board
      */
     public int getScore()
     {
-        // Dont return a score if there are ships unsunk
-        if (this.isRunning && this.shipcellsleft == 0)
-        {
-            return (this.size / this.firecount) * this.shipcells;         
-        }
-        return 0;
+        return (int)((((float)this.size * (float)this.size) / (float)this.shipcells / (float)this.firecount) * (float)1000);
     }
 }
 
