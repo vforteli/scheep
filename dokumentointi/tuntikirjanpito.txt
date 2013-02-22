@@ -10,4 +10,4 @@ Päivä		aika(min)	mitä
 20130212	30			lisää koodia käyttöliittymään, testejä, pisteiden tallennus ja laskeminen
 20130220	60			käyttöliittymän hiominen, refaktorointia
 20130221	60			käyttöliittymän hiominen, refaktorointia
-
+20130222	120			dokumentteja
