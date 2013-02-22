@@ -371,7 +371,7 @@ public class ScheepGUI extends javax.swing.JFrame
         if (board != null && board.getIsRunning())
         {
             int selection = JOptionPane.showConfirmDialog(
-                                null
+                        null
                         , "Do you want to discard the current game?"
                         , "New game"
                         , JOptionPane.OK_CANCEL_OPTION
@@ -454,7 +454,6 @@ public class ScheepGUI extends javax.swing.JFrame
                 {
                     cellpanel.setBackground(Color.blue);
                 }  
-                
                 BoardPanel.add(cellpanel);
                 x++;
             }
@@ -531,7 +530,6 @@ public class ScheepGUI extends javax.swing.JFrame
                 {
                     GameCompleted();
                 }
-                System.out.println(board.getScore());
             } 
             catch (Exception ex)
             {
@@ -600,7 +598,6 @@ public class ScheepGUI extends javax.swing.JFrame
         }
         
         board.StartGame();
-        
         DrawBoard(board.GetBoard());
     }//GEN-LAST:event_StartGameButtonActionPerformed
 
@@ -611,22 +608,7 @@ public class ScheepGUI extends javax.swing.JFrame
     private void GameCompleted()
     {
         NewScoreFrame.setVisible(true);
-        
-        //ResetGui();
     }    
-    
-    
-    /*
-     * Reset the gui to initial state
-     */
-    private void ResetGui()
-    {
-        board = null;
-        TurnsLabel.setText(null);
-        ScoreLabel.setText(null);
-        CoordinatesBox.setText(null);
-        // Anything else to clear?
-    }
     
     
     /**
@@ -715,8 +697,7 @@ public class ScheepGUI extends javax.swing.JFrame
         {
             for (Highscore s : _scores.getHighscores())
             {
-                model.addRow(new Object[] { s.Name, s.Score}); 
-                System.out.println(s.Name + ": " + s.Score);                
+                model.addRow(new Object[] { s.Name, s.Score});                              
             }
         }
         HighscoresTable.setModel(model);
