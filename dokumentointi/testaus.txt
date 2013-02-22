@@ -1,0 +1,13 @@
+Olen yrittänyt tehdä yksikkötestejä kaikille niille metodeille joille se on järkevää.
+Huomasin aika nopeasti että tämä peli tarvitsee vähemmän luokkia kuin olin alunperin ajatellut, enkä viitsinyt enää keskivaiheessa väkisin lisätä monimutkaisuutta vain monimutkaisuuden vuoksi. Yksikkötestejä löytyy siis vain coordinates ja board luokille. Highscore luokka on hieman hankala testata automaattisesti, koska metodit ovat riippuvaisia ulkopuolisesta tiedostosta ja tiedostojärjestelmästä. Näin ollen se olisi enemmänkin integraatiotestausta kuin yksikkötestausta. Olisi toki ollut mahdollista tehdä highscores luokasta mock luokka ja testata GUIta tällä.
+
+Bugeja ei varsinaisesti jäänyt, mutta esimerkiksi pisteiden tallennus voi kuitenkin epäonnistua jos ohjelma ei jostain syystä saa kirjoittaa samaan kansioon. Esimerkiksi windowsissa UAC saattaa joissakin tapauksissa estää tämän riippuen ohjelman sijainnista.
+
+GUI luokalle ei myöskään ole tehty testejä, koska nekään eivät varsinaisesti olisi yksikkötestejä
+
+Laivojen satunnaislisäyksessä on teoreettisesti mahdollista että ohjelma jää ikuiseen silmukkaan eikä pysty asettamaan laivaa laudalle. Koska laivoja ei voi asettaa päällekäin eikä edes vierekkäin, yrittää ohjelma satunnaisia paikkoja uudestaan kunnes löytyy paikka mihin laiva sopii. Ei hirveän tehokasta (suorastaan hävyttömän epätehokasta) mutta nopeus ei ole ongelma tässä tapauksessa.
+Osittain tästä syystä pelaajalle ei anneta mahdollisuutta vapaasti valita laivojen määrää tai laudan kokoa. Nämä arvot ovat valittavissa dropdown-valikoista. Löytyisiköhän Dijkstralta algoritmi laivoijen optimaaliselle sijoittamiselle?
+
+
+Bugi
+Jos uuden pelin käynnistää ennen kuin on ampunut yhtään laukausta, jää pelikenttä näkymättömäksi. Pelikenttä kuitenkin ilmestyy kun ampuu kerran käsin syötetyillä koordinaateilla

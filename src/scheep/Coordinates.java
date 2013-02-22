@@ -20,18 +20,30 @@ public class Coordinates
     public int y;
     
     
+    /**
+     * Get the coordinates in human form, eg A2
+     * @return 
+     */
     public String getHumanCoordinates()
     {
         return (char)(this.x + 97) + Integer.toString(this.y + 1);
     }
     
     
+    /**
+     * Create a new coordinate object with specified coordinates
+     * @param x
+     * @param y 
+     */
     public Coordinates(int x, int y)
     {
         this.x = x;
         this.y = y;        
     }
     
+    /**
+     * Create a new coordinates object
+     */
     public Coordinates()
     {
         

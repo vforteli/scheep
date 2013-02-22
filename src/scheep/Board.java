@@ -37,12 +37,16 @@ public class Board
     // Row major, ie yx. Not xy!
     private cellstate[][] board;
     private int size;
-    private boolean isRunning;
+    
+    /**
+     * Indicates if the game is running
+     * @return
+     */
     public boolean getIsRunning()
     {
         return this.isRunning;
     }
-    
+    private boolean isRunning;
     
     /**
      *  Fire count, aka number of turns
@@ -289,13 +293,9 @@ public class Board
     }
     
     
-    /*
-     * Get the score
-     * This method returns 0 if the game is running but there are ships left
-     */
     /**
-     *
-     * @return
+     * Get the score calculated by the very secret optimal algorithm....
+     * @return 
      */
     public int getScore()
     {
