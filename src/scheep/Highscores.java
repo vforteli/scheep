@@ -38,6 +38,7 @@ public class Highscores
             {
                 ObjectInputStream input = new ObjectInputStream(new FileInputStream(path));
                 this.highscores = (ArrayList<Highscore>)input.readObject();
+                // wuuh
             }
         } 
         catch (Exception ex)
